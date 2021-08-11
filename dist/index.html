@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="project-menu">
+        <nav class="projects-nav">
+            <h3>Your projects</h3>
+            <p>TOP</p>
+            <p>CodeCademy</p>
+            <p>FreeCodeCamp.org</p>
+            <button class="btn">New project</button>
+            
+        </nav>
+    </div>
+    
+    <main>
+        <button class="new-task-btn btn">+ add new task</button>
+        <div class="new-task-form-wrap">
+            <form class="new-task-form" action="">
+                <label for="task-title">Task</label>
+                <input type="text" name="task-title" id="task-title" placeholder="Clean the dishes">
+                <label for="task-desc">Short description</label>
+                <input type="text" name="task-desc" id="task-desc" placeholder="Make sure to scrub the frying pen thoroughly.">
+                <label for="task-due-date">Due date</label>
+                <input type="date" name="task-due-date" id="task-due-date">
+                <label for="task-priority">Priority</label>
+                <input type="text" name="task-priority" id="task-priority" placeholder="High">
+                <label for="task-parent-project">Assign to project</label>
+                <input type="text" name="task-parent-project" id="task-parent-project">
+                <div class="form-btn-wrap">
+                    <input class="form-btn btn" type="submit" name="submit-new-task" id="submit-new-task" value="Add task">
+                    <button class="form-btn btn" id="cancel-new-task-form">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+
+    <script src="main.js"></script>
+</body>
+</html>

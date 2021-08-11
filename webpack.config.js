@@ -4,26 +4,28 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, options) => {
     return {
+
+        mode: 'development',
         entry: './src/index.js',
 
         output: {
-            path: path.resolve(__dirname, 'build'),
+            path: path.resolve(__dirname, 'dist'),
             filename: 'main.js',
         },
 
-        devtool: 'cheap-eval-source-map',
+        devtool: 'eval-source-map',
 
         module: {
             rules: [
                 {
-                    test: /\.jsx$|\.es6$|\.js$/,
+                    test: /\.m?js$/,
+                    exclude: /(node_modules|bower_components)/,
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            presets: ['@babel/preset-env'],
+                            presets: ['@babel/preset-env']
                         }
-                    },
-                    exclude: /(node_modules|bower_components)/
+                    }
                 },
                 {
                     test: /\.css$/,
