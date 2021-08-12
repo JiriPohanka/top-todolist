@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,26 +8,45 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="project-menu">
-        <nav class="projects-nav">
+
+    <header>
+        <div class="logo-wrap">
+            <span class="logo">Just TO DO it!</span>
+        </div>
+        
+        <div class="top-menu-wrap">
+            <nav>
+                <ul class="top-menu">
+                    <a href=""><li>Sign in</li></a>
+                    <a href=""><li>Sign up</li></a>
+                </ul> 
+            </nav>
+        </div>
+    </header>
+
+    <div class="project-nav-wrap">
+        <nav class="project-nav">
             <h3>Your projects</h3>
-            <p>TOP</p>
-            <p>CodeCademy</p>
-            <p>FreeCodeCamp.org</p>
-            <button class="btn">New project</button>
-            
+            <ul>
+
+            </ul>
         </nav>
     </div>
     
     <main>
-        <button class="new-task-btn btn">+ add new task</button>
-        <div class="new-task-form-wrap">
-            <form class="new-task-form" action="">
+        <button class="new-project-btn btn">+ New project</button>
+        <button class="new-task-btn btn">+ New task</button>
+
+        <!--New task form hidden on load-->
+        <div class="form-wrap new-task-form-wrap">
+            <form class="new-task-form new-item-form" action="">
                 <label for="task-title">Task</label>
                 <input type="text" name="task-title" id="task-title" placeholder="Clean the dishes">
                 <label for="task-desc">Short description</label>
-                <input type="text" name="task-desc" id="task-desc" placeholder="Make sure to scrub the frying pen thoroughly.">
+                <input type="text" name="task-desc" id="task-desc"
+                    placeholder="Make sure to scrub the frying pen thoroughly.">
                 <label for="task-due-date">Due date</label>
                 <input type="date" name="task-due-date" id="task-due-date">
                 <label for="task-priority">Priority</label>
@@ -34,8 +54,27 @@
                 <label for="task-parent-project">Assign to project</label>
                 <input type="text" name="task-parent-project" id="task-parent-project">
                 <div class="form-btn-wrap">
-                    <input class="form-btn btn" type="submit" name="submit-new-task" id="submit-new-task" value="Add task">
-                    <button class="form-btn btn" id="cancel-new-task-form">Cancel</button>
+                    <input class="submit-form-btn form-btn btn" type="submit" name="submit-new-task" id="submit-new-task"
+                        value="Add task">
+                    <button class="cancel-form-btn form-btn btn" id="cancel-new-task-form">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <!--New project form hidden on load-->
+        <div class="form-wrap new-project-form-wrap">
+            <form class="new-project-form new-item-form" action="">
+                <label for="project-title">Project</label>
+                <input type="text" name="project-title" id="project-title" placeholder="Housechores">
+                <label for="task-desc">Short description</label>
+                <input type="text" name="project-desc" id="project-desc"
+                    placeholder="Get the place clean before the wedding comes.">
+                <label for="project-priority">Priority</label>
+                <input type="text" name="project-priority" id="project-priority" placeholder="High">
+                <div class="form-btn-wrap">
+                    <input class="submit-form-btn form-btn btn" type="submit" name="submit-new-project" id="submit-new-project"
+                        value="Add project">
+                    <button class="cancel-form-btn form-btn btn" id="cancel-new-project-form">Cancel</button>
                 </div>
             </form>
         </div>
@@ -45,4 +84,5 @@
 
     <script src="main.js"></script>
 </body>
+
 </html>
