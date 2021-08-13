@@ -188,5 +188,9 @@ main {
 
 .active-tasks-table tr, th, td {
     text-align: left;
-    padding: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.task-finished {
+    color:rgb(177, 177, 177);
 }
