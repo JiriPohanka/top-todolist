@@ -77,8 +77,23 @@ header {
     font-size: 90%;
 }
 
-.project-nav p {
+.project-nav li {
     font-size: 90%;
+    margin-top: 0.5rem;
+}
+
+.active-project {
+    font-weight: bold;
+}
+
+.show-all-tasks {
+    font-size: 90%;
+    color:rgb(46, 46, 46)
+}
+
+.show-all-tasks:hover {
+    color: black;
+    cursor: pointer;
 }
 
 /* AREA WITH TASKS */
@@ -160,4 +175,18 @@ main {
 .new-item-form label {
     margin: 0.5rem 0 0.3rem 0;
     font-size: 0.8rem;
+}
+
+/* TASKS AREA */
+.active-tasks-table {
+    position: absolute;
+}
+
+.active-tasks-table th {
+    font-size: 80%;
+}
+
+.active-tasks-table tr, th, td {
+    text-align: left;
+    padding: 1rem;
 }

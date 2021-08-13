@@ -32,12 +32,16 @@
             <ul>
 
             </ul>
+            <span class="show-all-tasks">Show all projects</span>
         </nav>
     </div>
     
     <main>
         <button class="new-project-btn btn">+ New project</button>
         <button class="new-task-btn btn">+ New task</button>
+        <table class="active-tasks-table">
+            
+        </table>
 
         <!--New task form hidden on load-->
         <div class="form-wrap new-task-form-wrap">
@@ -52,11 +56,11 @@
                 <label for="task-priority">Priority</label>
                 <input type="text" name="task-priority" id="task-priority" placeholder="High">
                 <label for="task-parent-project">Assign to project</label>
-                <input type="text" name="task-parent-project" id="task-parent-project">
+                <select name="task-parent-project" id="task-parent-project">
                 <div class="form-btn-wrap">
                     <input class="submit-form-btn form-btn btn" type="submit" name="submit-new-task" id="submit-new-task"
                         value="Add task">
-                    <button class="cancel-form-btn form-btn btn" id="cancel-new-task-form">Cancel</button>
+                    <button class="cancel-form-btn form-btn btn" type="button" id="cancel-new-task-form">Cancel</button>
                 </div>
             </form>
         </div>
@@ -74,7 +78,7 @@
                 <div class="form-btn-wrap">
                     <input class="submit-form-btn form-btn btn" type="submit" name="submit-new-project" id="submit-new-project"
                         value="Add project">
-                    <button class="cancel-form-btn form-btn btn" id="cancel-new-project-form">Cancel</button>
+                    <button class="cancel-form-btn form-btn btn" type="button" id="cancel-new-project-form">Cancel</button>
                 </div>
             </form>
         </div>
