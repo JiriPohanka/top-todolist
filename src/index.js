@@ -154,23 +154,33 @@ const taskAreaUI = (() => {
     function showAllTasks() {
 
         const allTasks = projectManager.getAllTasks()
-
+        const sortedAllTasks = projectManager.pushFinishedToEnd(allTasks)
+        
         // remove class 'active-project' if it exists
         if (projectMenuUI.getActiveProject()) {
             projectMenuUI.getActiveProject().classList.remove('active-project')
         }
-        createTaskTable(allTasks)
+        createTaskTable(sortedAllTasks)
     }
-
+    
     function showTasksOfActiveProject() {
-
+        
         const activeProject = projectManager.getProjectList()[projectMenuUI.getActiveProject().dataset.projectId]
         const tasksInProject = projectManager.getTasksInProject(activeProject)
+        const sortedTasksInProject = projectManager.pushFinishedToEnd(tasksInProject)
 
-        createTaskTable(tasksInProject)
+        createTaskTable(sortedTasksInProject)
     }
 
-    return { showTasksOfActiveProject, showAllTasks }
+    function updateTaskList() {
+        if (projectMenuUI.getActiveProject()) {
+            showTasksOfActiveProject()
+        } else {
+            showAllTasks()
+        }
+    }
+
+    return { showTasksOfActiveProject, showAllTasks, updateTaskList }
 })()
 
 
@@ -178,4 +188,7 @@ const taskAreaUI = (() => {
 //for testing purposes
 populateOnLoad()
 projectMenuUI.updateProjectMenu()
-taskAreaUI.showAllTasks()
+taskAreaUI.updateTaskList()
+
+
+export { taskAreaUI }

@@ -9,7 +9,11 @@ const taskManager = (() => {
         task.isFinished = true
     }
 
-    return { appendToProject, finishTask }
+    function restoreTask(task) {
+        task.isFinished = false
+    }
+
+    return { appendToProject, finishTask, restoreTask }
 })()
 
 // module for all project-related methods
@@ -18,6 +22,15 @@ const projectManager = (() => {
 
     function appendToProjects(project) {
         projects.push(project)
+    }
+
+    function pushFinishedToEnd(taskArray) {
+        const sortedTasks = taskArray.sort((task1, task2) => task1.isFinished - task2.isFinished)
+        return sortedTasks
+    }
+
+    function sortTasksByPriority(taskArray) {
+        const sortedTasks = taskArray.sort((task1, task2) => task1.priority - task2.priority)
     }
 
     function getTasksInProject(project) {
@@ -42,7 +55,14 @@ const projectManager = (() => {
         return projects
     }
 
-    return { getTasksInProject, appendToProjects, getProjectList, getAllTasks }
+    return { 
+        getTasksInProject, 
+        appendToProjects, 
+        getProjectList, 
+        getAllTasks, 
+        pushFinishedToEnd, 
+        sortTasksByPriority
+    }
 })()
 
 export { taskManager, projectManager }

@@ -5,9 +5,9 @@ function createTask(title, desc, dueDate, priority, parentProject, isFinished = 
 
     const newTask = { title, desc, dueDate, priority, parentProject, isFinished }
     
-    // if (!newTask.isFinished) {
-    //     newTask.isFinished = false
-    // }
+    if (newTask.isFinished) {
+        taskManager.finishTask(newTask)
+    }
 
     taskManager.appendToProject(newTask, parentProject)
 

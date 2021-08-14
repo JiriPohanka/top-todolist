@@ -1,3 +1,6 @@
+import { taskManager } from "./managers"
+import { taskAreaUI } from "./index"
+
 const activeTasksTable = document.querySelector('.active-tasks-table')
 
 const createTaskTable = (relevantTasks) => {
@@ -50,9 +53,13 @@ const createTaskTable = (relevantTasks) => {
 
         checkBox.addEventListener('change', () => {
             if (checkBox.checked) {
+                taskManager.finishTask(task)
                 row.classList.add('task-finished')
+                taskAreaUI.updateTaskList()
             } else {
+                taskManager.restoreTask(task)
                 row.classList.remove('task-finished')
+                taskAreaUI.updateTaskList()
             }
         })
 
