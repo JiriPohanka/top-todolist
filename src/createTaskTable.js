@@ -36,6 +36,8 @@ const createTaskTable = (relevantTasks) => {
     colProject.textContent = "Project"
 
     // for each task object create a row in table
+    const includeFinishedCheckbox = document.querySelector('#checkbox-include-finished')
+    
     for (let task of relevantTasks) {
 
         const row = document.createElement('tr')
@@ -47,20 +49,26 @@ const createTaskTable = (relevantTasks) => {
         colStatusValue.appendChild(checkBox)
         checkBox.setAttribute('type', 'checkbox')
         checkBox.checked = task.isFinished
-        if (checkBox.checked) {
+
+        if (checkBox.checked && includeFinishedCheckbox.checked) {
+            row.classList.add('task-finished')
+            row.classList.add('show-hidden-task')
+        }
+        
+        if (checkBox.checked && !includeFinishedCheckbox.checked) {
             row.classList.add('task-finished')
         }
-
+        
         checkBox.addEventListener('change', () => {
             if (checkBox.checked) {
                 taskManager.finishTask(task)
-                row.classList.add('task-finished')
                 taskAreaUI.updateTaskList()
             } else {
                 taskManager.restoreTask(task)
-                row.classList.remove('task-finished')
                 taskAreaUI.updateTaskList()
             }
+
+
         })
 
         const colTitleValue = document.createElement('td')

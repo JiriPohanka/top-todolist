@@ -39,6 +39,17 @@
     <main>
         <button class="new-project-btn btn">+ New project</button>
         <button class="new-task-btn btn">+ New task</button>
+        <div class="filter-section">
+            <input type="checkbox" id="checkbox-include-finished">
+            <label for="checkbox-include-finished">include finished</label>
+            <select name="task-order" id="task-order">
+                <option value="default">Chronological</option>
+                <option value="priority">Priority</option>
+                <option value="due-date">Due date</option>
+            </select>
+            <label for="task-order">Order</label>
+        </div>
+
         <table class="active-tasks-table">
             
         </table>
@@ -54,7 +65,11 @@
                 <label for="task-due-date">Due date</label>
                 <input type="date" name="task-due-date" id="task-due-date">
                 <label for="task-priority">Priority</label>
-                <input type="text" name="task-priority" id="task-priority" placeholder="High">
+                <select name="task-priority" id="task-priority" placeholder="High">
+                    <option value="1">low</option>
+                    <option value="2">medium</option>
+                    <option value="3">high</option>
+                </select>
                 <label for="task-parent-project">Assign to project</label>
                 <select name="task-parent-project" id="task-parent-project">
                 <div class="form-btn-wrap">

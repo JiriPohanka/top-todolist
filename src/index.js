@@ -2,7 +2,7 @@ import format from 'date-fns'
 import { createTaskTable } from './createTaskTable'
 import { populateOnLoad } from './populateOnLoad'
 import { createTask } from './createTask'
-import { createProject} from './createProject'
+import { createProject } from './createProject'
 import { projectManager } from './managers'
 
 // module for DOM manipulation of new-item-forms
@@ -38,7 +38,7 @@ const formsUI = (() => {
         newTaskFormWrap.classList.toggle('visible')
         newTaskBtn.disabled = false
     })
-    
+
     const cancelNewProjectForm = document.querySelector('#cancel-new-project-form')
     cancelNewProjectForm.addEventListener('click', (e) => {
         newProjectForm.reset()
@@ -64,9 +64,7 @@ const formsUI = (() => {
         newTaskFormWrap.classList.toggle('visible')
         newTaskBtn.disabled = false
 
-        if (projectMenuUI.getActiveProject()) {
-            taskAreaUI.showTasksOfActiveProject()
-        } else taskAreaUI.showAllTasks()
+        taskAreaUI.updateTaskList()
     })
 
     newProjectForm.addEventListener('submit', (e) => {
@@ -97,21 +95,56 @@ const formsUI = (() => {
 })()
 
 
+const dataStorage = {
+    taskOrder:  0,
+
+}
+
+
+// Filtering and arranging tasks module
+
+const filterSectionUI = (() => {
+
+    const includeFinishedCheckbox = document.querySelector('#checkbox-include-finished')
+
+    includeFinishedCheckbox.addEventListener('change', () => {
+        const finishedTasks = document.querySelectorAll('.task-finished')
+
+        for (let task of finishedTasks) {
+            if (includeFinishedCheckbox.checked) {
+                task.classList.add('show-hidden-task')
+            } else {
+                task.classList.remove('show-hidden-task')
+            }
+        }
+    })
+
+    const selectOrderButton = document.querySelector('#task-order')
+    selectOrderButton.addEventListener('change', (e) => {
+
+        dataStorage.taskOrder = e.target.options.selectedIndex
+        taskAreaUI.updateTaskList()
+    })
+})()
+
+
 // Module for Project menu DOM manipulation
 const projectMenuUI = (() => {
 
     // add logic for show-all-tasks button
     const showAllTasksBtn = document.querySelector('.show-all-tasks')
     showAllTasksBtn.addEventListener('click', (e) => {
-    taskAreaUI.showAllTasks()
+        taskAreaUI.showAllTasks(dataStorage.taskOrder)
     })
 
-    const projectList = projectManager.getProjectList()
     const projectNav = document.querySelector('.project-nav ul')
-
+    
     function updateProjectMenu() {
-        projectNav.innerHTML = ""
+        const projectList = projectManager.getProjectList()
+        const currentActiveProject = getActiveProject()
 
+        projectNav.innerHTML = ""
+        
         for (let [i, project] of projectList.entries()) {
             const projectItem = document.createElement('li')
             projectItem.setAttribute('data-project-id', i)
@@ -119,23 +152,28 @@ const projectMenuUI = (() => {
             projectNav.appendChild(projectItem)
             projectItem.textContent = `${project.title}`
         }
-        setActiveProject()
+        
+        // keep original active project after resetting the projectNav.innerHTML
+        if (currentActiveProject) {
+            document.querySelector(`[data-project-id="${currentActiveProject.dataset.projectId}"]`).classList.add('active-project')
+        }
+        
+        addMenuListeners()
     }
 
-    function setActiveProject() {
+    function addMenuListeners() {
         const projectItems = document.querySelectorAll('.project-item')
         for (let projectItem of projectItems) {
             projectItem.addEventListener('click', (e) => {
-    
+
                 // first remove all active
                 for (let projectItem of projectItems) {
                     projectItem.classList.remove('active-project')
                 }
-    
+
                 // then add active on the clicked item
-                projectItem.classList.toggle('active-project')
-    
-                taskAreaUI.showTasksOfActiveProject()
+                projectItem.classList.add('active-project')
+                taskAreaUI.updateTaskList()
             })
         }
     }
@@ -151,32 +189,64 @@ const projectMenuUI = (() => {
 // module for populating tasks area based on active project
 const taskAreaUI = (() => {
 
-    function showAllTasks() {
+    function showAllTasks(taskOrder) {
 
         const allTasks = projectManager.getAllTasks()
-        const sortedAllTasks = projectManager.pushFinishedToEnd(allTasks)
-        
+
+        let orderedTasks = []
+
+        if (taskOrder === 0) {
+            orderedTasks = allTasks
+        }
+
+        if (taskOrder === 1) {
+            orderedTasks = projectManager.sortByPriority(allTasks)
+        }
+
+        if (taskOrder === 2) {
+            orderedTasks = allTasks
+        }
+
+        const sortedAllTasks = projectManager.sortByFinished(orderedTasks)
+
         // remove class 'active-project' if it exists
         if (projectMenuUI.getActiveProject()) {
             projectMenuUI.getActiveProject().classList.remove('active-project')
         }
         createTaskTable(sortedAllTasks)
     }
-    
-    function showTasksOfActiveProject() {
-        
+
+    function showTasksOfActiveProject(taskOrder) {
+
         const activeProject = projectManager.getProjectList()[projectMenuUI.getActiveProject().dataset.projectId]
         const tasksInProject = projectManager.getTasksInProject(activeProject)
-        const sortedTasksInProject = projectManager.pushFinishedToEnd(tasksInProject)
+
+        let orderedTasksInProject = []
+
+        if (taskOrder === 0) { // chronological
+            orderedTasksInProject = tasksInProject
+        }
+
+        if (taskOrder === 1) { // priority
+            orderedTasksInProject = projectManager.sortByPriority(tasksInProject)
+        }
+
+        if (taskOrder === 2) { //due date
+            orderedTasksInProject = tasksInProject
+        }
+
+        const sortedTasksInProject = projectManager.sortByFinished(orderedTasksInProject)
 
         createTaskTable(sortedTasksInProject)
     }
 
+
     function updateTaskList() {
+
         if (projectMenuUI.getActiveProject()) {
-            showTasksOfActiveProject()
+            showTasksOfActiveProject(dataStorage.taskOrder)
         } else {
-            showAllTasks()
+            showAllTasks(dataStorage.taskOrder)
         }
     }
 
@@ -188,7 +258,7 @@ const taskAreaUI = (() => {
 //for testing purposes
 populateOnLoad()
 projectMenuUI.updateProjectMenu()
-taskAreaUI.updateTaskList()
+taskAreaUI.updateTaskList(dataStorage.taskOrder)
 
 
 export { taskAreaUI }

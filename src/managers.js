@@ -24,17 +24,24 @@ const projectManager = (() => {
         projects.push(project)
     }
 
-    function pushFinishedToEnd(taskArray) {
-        const sortedTasks = taskArray.sort((task1, task2) => task1.isFinished - task2.isFinished)
+    function sortByPriority(arr) {
+        const sortedTasks = arr.sort((task1, task2) => task2.priority - task1.priority)
         return sortedTasks
     }
 
-    function sortTasksByPriority(taskArray) {
-        const sortedTasks = taskArray.sort((task1, task2) => task1.priority - task2.priority)
+    function sortByFinished(arr) {
+        const sortedTasks = arr.sort((task1, task2) => task1.isFinished - task2.isFinished)
+        return sortedTasks
+    }
+
+    function sortByDueDate(arr) {
+        const sortedTasks = arr.sort((task1, task2) => task1.isFinished - task2.isFinished)
+        return sortedTasks
     }
 
     function getTasksInProject(project) {
-        return project.taskArr
+        const projectTasksArr = project.taskArr.map((task) => task)
+        return projectTasksArr
     }
 
     // to get an arr of all tasks across all projects
@@ -52,7 +59,8 @@ const projectManager = (() => {
     }
 
     function getProjectList() {
-        return projects
+        const allProjectsArr = projects
+        return allProjectsArr
     }
 
     return { 
@@ -60,8 +68,9 @@ const projectManager = (() => {
         appendToProjects, 
         getProjectList, 
         getAllTasks, 
-        pushFinishedToEnd, 
-        sortTasksByPriority
+        sortByFinished, 
+        sortByPriority,
+        sortByDueDate
     }
 })()
 

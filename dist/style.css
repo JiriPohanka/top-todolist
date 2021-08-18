@@ -193,4 +193,9 @@ main {
 
 .task-finished {
     color:rgb(177, 177, 177);
+    visibility: hidden;
+}
+
+.show-hidden-task {
+    visibility: visible;
 }
